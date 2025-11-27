@@ -48,7 +48,7 @@ python app.py
 This will start a local web server. Open that link in your browser to use the summarizer.
 
 Live Demo:
-You can try the app online without installing anything here: 
+You can try the app online without installing anything here: https://huggingface.co/spaces/nishal14k/medical-legal-summarizer
 
 Contributing
 If you have ideas to improve the project, please open an issue or submit a pull request.
