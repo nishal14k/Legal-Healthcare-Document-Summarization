@@ -175,7 +175,6 @@ def preprocess_mixed(ds, med_cols, leg_cols):
         return tokenized
     return fn
 
-
 if tokenized_train is None and train_ds is not None:
 tokenized_train = train_ds.map(preprocess_mixed(train_ds, (MED_INPUT_COL, MED_TARGET_COL), (LEG_INPUT_COL, LEG_TARGET_COL)), batched=True)
 tokenized_val = val_ds.map(preprocess_mixed(val_ds, (MED_INPUT_COL, MED_TARGET_COL), (LEG_INPUT_COL, LEG_TARGET_COL)), batched=True) if val_ds else None
@@ -212,7 +211,6 @@ training_args = Seq2SeqTrainingArguments(
     push_to_hub=False,
     report_to="none",
 )
-
 # Set these after construction (works even if constructor rejects them)
 try:
     training_args.evaluation_strategy = "epoch"
@@ -295,10 +293,8 @@ print(df)
 print("📊 Calculating Baseline Scores...")
 
 def lead3(text):
-
     return " ".join(re.split(r'(?<=[.?!])\s+', str(text))[:3])
-
-
+    
 baseline_summaries = [lead3(text) for text in test_subset["article"]] 
 
 base_results = rouge.compute(predictions=baseline_summaries, references=reference_summaries, use_stemmer=True)
@@ -333,8 +329,6 @@ def simple_textrank(text, num_sentences=3):
 # 2. Run Evaluation
 print("📊 Calculating TextRank Scores...")
 rouge = evaluate.load("rouge")
-
-
 textrank_preds = []
 for item in tqdm(test_subset):
     input_text = item.get("article") or item.get("text") or ""
@@ -346,4 +340,3 @@ tr_results = rouge.compute(predictions=textrank_preds, references=reference_summ
 
 print("\n🏆 TextRank SCORES:")
 print({k: round(v * 100, 2) for k, v in tr_results.items()})
-
